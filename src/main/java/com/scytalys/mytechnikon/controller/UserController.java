@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -22,18 +24,23 @@ public class UserController {
                 userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
     }
 
-    @GetMapping("/search/{id}")
-    public ResponseEntity<UserResource> searchUser(@PathVariable("id") Long id) {
+    @GetMapping()
+    public ResponseEntity<List<UserResource>> findAll() {
+        return new ResponseEntity<>(userMapper.toResourceList(userService.findAll()), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(params = {"id"})
+    public ResponseEntity<UserResource> getById(@RequestParam("id") Long id) {
         return new ResponseEntity<>(userMapper.toResource(userService.get(id)), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/search/tin/{tin}")
-    public ResponseEntity<UserResource> searchUserByTin(@PathVariable("tin") Long tin) {
+    @GetMapping(params = {"tin"})
+    public ResponseEntity<UserResource> findByTin(@RequestParam("tin") Long tin) {
         return new ResponseEntity<>(userMapper.toResource(userService.findByTin(tin)), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/search/email/{email}")
-    public ResponseEntity<UserResource> searchUserByEmail(@PathVariable("email") String email) {
+    @GetMapping(params = {"email"})
+    public ResponseEntity<UserResource> searchUserByEmail(@RequestParam("email") String email) {
         return new ResponseEntity<>(userMapper.toResource(userService.findByEmail(email)), HttpStatus.ACCEPTED);
     }
 
