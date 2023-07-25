@@ -22,38 +22,38 @@ public class RepairController {
     private final RepairMapper repairMapper;
 
     @PutMapping("/update")
-    public void updateRepair(@RequestBody RepairResource repairDto) {
-        repairService.update(repairMapper.repairResourceToRepair(repairDto));
+    public void updateRepair(@RequestBody RepairResource repairResource) {
+        repairService.update(repairMapper.toDomain(repairResource));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RepairResource> createRepair(@RequestBody RepairResource repairDto) {
-        return new ResponseEntity<>(repairMapper.repairToRepairResource(
-                (repairService.create(repairMapper.repairResourceToRepair(repairDto)))), HttpStatus.CREATED);
+    public ResponseEntity<RepairResource> createRepair(@RequestBody RepairResource repairResource) {
+        return new ResponseEntity<>(repairMapper.toResource(
+                (repairService.create(repairMapper.toDomain(repairResource)))), HttpStatus.CREATED);
     }
 
     @GetMapping()
     public ResponseEntity<List<RepairResource>> findRepairs() {
-        return ResponseEntity.ok(repairMapper.repairListToRepairResourceList(repairService.findAll()));
+        return ResponseEntity.ok(repairMapper.toResourceList(repairService.findAll()));
     }
 
     @GetMapping(params = {"userId"})
     public ResponseEntity<List<RepairResource>> findRepairByUserId(@RequestParam("userId") Long userId) {
-        return ResponseEntity.ok(repairMapper.repairListToRepairResourceList(repairService.findRepairByUserId(userId)));
+        return ResponseEntity.ok(repairMapper.toResourceList(repairService.findRepairByUserId(userId)));
     }
 
     @GetMapping(params = {"repairDate"})
     public ResponseEntity<List<RepairResource>> findByRepairDate(@RequestParam("repairDate")
                                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                                                             Date repairDate) {
-        return ResponseEntity.ok(repairMapper.repairListToRepairResourceList(repairService.findByRepairDate(repairDate)));
+        return ResponseEntity.ok(repairMapper.toResourceList(repairService.findByRepairDate(repairDate)));
     }
 
     @GetMapping(params = {"fromRepairDate", "toRepairDate"})
     public ResponseEntity<List<RepairResource>> findByRepairDateBetween(
             @RequestParam("fromRepairDate") Date fromRepairDate,
             @RequestParam("toRepairDate") Date toRepairDate) {
-        return ResponseEntity.ok(repairMapper.repairListToRepairResourceList(repairService.findByRepairDateBetween(fromRepairDate, toRepairDate)));
+        return ResponseEntity.ok(repairMapper.toResourceList(repairService.findByRepairDateBetween(fromRepairDate, toRepairDate)));
     }
 
     @DeleteMapping("/delete/{id}")
