@@ -5,9 +5,9 @@ import com.scytalys.mytechnikon.domain.Property;
 import java.util.List;
 
 public interface PropertyService extends BaseService<Property, Long> {
-    Property findByPIN(Long pin);
+    Property findByPin(Long pin);
 
-    List<Property> findByTIN(Long tin);
+    List<Property> findByTin(Long tin);
 
     List<Property> findByPropertyType(String propertyType);
 

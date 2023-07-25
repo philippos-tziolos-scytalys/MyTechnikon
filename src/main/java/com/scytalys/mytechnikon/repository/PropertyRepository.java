@@ -7,10 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PropertyRepository extends JpaRepository<Property, Long> {
-    @Query("""
-                select p from Property p
-                where p.pin = :pin
-            """)
+
     Property findByPin(Long pin);
 
     @Query("""
@@ -27,16 +24,11 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
             """)
     List<Property> findPropertyByUser(Long userId);
 
-
-    @Query("""
-                select p from Property p
-                where p.propertyType = :propertyType
-            """)
     List<Property> findByPropertyType(String propertyType);
 
-    @Query("""
-                select p from Property p
-                where p.constructionYear >= :yearFrom and p.constructionYear <= :yearTo
-            """)
-    List<Property> findByConstructionYearRange(int yearFrom, int yearTo);
+//    @Query("""
+//                select p from Property p
+//                where p.constructionYear >= :yearFrom and p.constructionYear <= :yearTo
+//            """)
+    List<Property> findByConstructionYearBetween(int yearFrom, int yearTo);
 }

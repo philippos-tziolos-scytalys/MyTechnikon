@@ -21,12 +21,12 @@ public class PropertyServiceImpl extends BaseServiceImpl<Property> implements Pr
     }
 
     @Override
-    public Property findByPIN(Long pin) {
+    public Property findByPin(Long pin) {
         return propertyRepository.findByPin(pin);
     }
 
     @Override
-    public List<Property> findByTIN(Long tin) {
+    public List<Property> findByTin(Long tin) {
         return propertyRepository.findByTin(tin);
     }
 
@@ -37,7 +37,7 @@ public class PropertyServiceImpl extends BaseServiceImpl<Property> implements Pr
 
     @Override
     public List<Property> findByConstructionYearRange(int yearFrom, int yearTo) {
-        return propertyRepository.findByConstructionYearRange(yearFrom, yearTo);
+        return propertyRepository.findByConstructionYearBetween(yearFrom, yearTo);
     }
 
     @Override
