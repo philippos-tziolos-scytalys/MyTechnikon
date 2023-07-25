@@ -27,24 +27,24 @@ public class UserController {
         return new ResponseEntity<>(userMapper.toResource(userService.get(id)), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/search/tin/{tinNumber}")
-    public ResponseEntity<UserResource> searchUserByTin(@PathVariable("tinNumber") Long tin) {
+    @GetMapping("/search/tin/{tin}")
+    public ResponseEntity<UserResource> searchUserByTin(@PathVariable("tin") Long tin) {
         return new ResponseEntity<>(userMapper.toResource(userService.findByTin(tin)), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/search/email/{email}")
     public ResponseEntity<UserResource> searchUserByEmail(@PathVariable("email") String email) {
-        return new ResponseEntity<>(userMapper.userToUserDto(userService.getUserByEmail(email)), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(userMapper.toResource(userService.findByEmail(email)), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") final Long id) {
-        userService.deleteUser(id);
+        userService.deleteById(id);
         return ResponseEntity.ok("User deleted successfully");
     }
 
     @PutMapping("/update")
     public void updateUser(@RequestBody UserResource userResource) {
-        userService.updateUser(userMapper.userDtoToUser(userDto));
+        userService.update(userMapper.toDomain(userResource));
     }
 }
