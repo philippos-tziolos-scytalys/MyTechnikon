@@ -1,7 +1,7 @@
 package com.scytalys.mytechnikon.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -26,15 +26,15 @@ public class Repair extends BaseModel {
     @Column(length = 11, nullable = false)
     private RepairStatus repairStatus = RepairStatus.PENDING;
 
-    @NotEmpty
+    @NotNull
     @Column(length = 5000, nullable = false)
     private String description;
 
-    @NotEmpty
+    @NotNull
     @Column(nullable = false)
     private Date repairDate;
 
-    @NotEmpty
+    @NotNull
     @Column(nullable = false)
     private BigDecimal cost;
 

@@ -1,7 +1,7 @@
 package com.scytalys.mytechnikon.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "Properties")
 @SequenceGenerator(name = "idGenerator", sequenceName = "property_sequence", initialValue = 1, allocationSize = 1)
 public class Property extends BaseModel{
-    @NotEmpty
+    @NotNull
     @Size(max=9, min=9, message = "Invalid Property Identification Number")
     private Long pin;
 

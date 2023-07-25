@@ -1,10 +1,7 @@
 package com.scytalys.mytechnikon.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.List;
@@ -18,8 +15,8 @@ import java.util.List;
 @Table(name = "Users")
 @SequenceGenerator(name = "idGenerator", sequenceName = "user_sequence", initialValue = 1, allocationSize = 1)
 public class User extends BaseModel{
-    @NotEmpty
-    @Size(max=9, min=9, message = "TIN number must be exactly 9 digits")
+    @NotNull
+    @Digits(integer=9, fraction=0, message = "TIN number must be exactly 9 digits")
     private Long tin;
 
     @Column(name = "first_name", length = 50)
@@ -32,11 +29,11 @@ public class User extends BaseModel{
     @Size(max = 50, message = "Address cannot be bigger than 50 characters.")
     private String address;
 
-    @NotEmpty
-    @Size(max=10, min=10, message = "Phone number must be exactly 10 digits")
+    @NotNull
+    @Digits(integer=10, fraction=0, message = "Phone number must be exactly 10 digits")
     private Long phone;
 
-    @NotEmpty
+    @NotNull
     @Column(unique = true)
     private String username;
 
@@ -44,11 +41,12 @@ public class User extends BaseModel{
     @Column(length = 50)
     private String email;
 
-    @NotEmpty
+    @NotNull
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$", message = "Invalid password")
     private String password;
 
-    @NotEmpty
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "user_picture")
@@ -56,4 +54,6 @@ public class User extends BaseModel{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Property> properties;
+
+
 }
