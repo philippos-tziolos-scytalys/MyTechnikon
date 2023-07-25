@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface RepairRepository extends JpaRepository<Repair, Long> {
     @Query("""
@@ -17,11 +16,11 @@ public interface RepairRepository extends JpaRepository<Repair, Long> {
             where u.id = :userId
             order by r.repairDate
             """)
-    Optional<List<Repair>> findRepairByUserId(Long userId);
+    List<Repair> findRepairByUserId(Long userId);
 
-    Optional<List<Repair>> findByRepairDate(Date repairDate);
+    List<Repair> findByRepairDate(Date repairDate);
 
-    Optional<List<Repair>> findByRepairDateBetween(Date fromRepairDate, Date toRepairDate);
+    List<Repair> findByRepairDateBetween(Date fromRepairDate, Date toRepairDate);
 
-    Optional<List<Repair>> findByRepairStatus(RepairStatus repairStatus);
+    List<Repair> findByRepairStatus(RepairStatus repairStatus);
 }

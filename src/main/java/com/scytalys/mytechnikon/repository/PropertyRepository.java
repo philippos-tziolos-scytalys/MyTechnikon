@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PropertyRepository extends JpaRepository<Property, Long> {
     @Query("""
@@ -19,25 +18,25 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
                 join fetch User u
                 where u.tin = :tin
             """)
-    Optional<List<Property>> findByTin(Long tin);
+    List<Property> findByTin(Long tin);
 
     @Query("""
                 select p from Property p
                 join fetch User u
                 where u.id = :userId
             """)
-    Optional<List<Property>> findPropertyByUser(Long userId);
+    List<Property> findPropertyByUser(Long userId);
 
 
     @Query("""
                 select p from Property p
                 where p.propertyType = :propertyType
             """)
-    Optional<List<Property>> findByPropertyType(String propertyType);
+    List<Property> findByPropertyType(String propertyType);
 
     @Query("""
                 select p from Property p
                 where p.constructionYear >= :yearFrom and p.constructionYear <= :yearTo
             """)
-    Optional<List<Property>> findByConstructionYearRange(int yearFrom, int yearTo);
+    List<Property> findByConstructionYearRange(int yearFrom, int yearTo);
 }

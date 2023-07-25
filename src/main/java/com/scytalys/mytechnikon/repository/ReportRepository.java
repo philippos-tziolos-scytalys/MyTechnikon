@@ -7,16 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query("""
                 select r from Report r
                 where (r.reportDate >= :dateFrom and r.reportDate <= :dateTo)
             """)
-    Optional<List<Report>> findReportsByRange(Date dateFrom, Date dateTo);
+    List<Report> findReportsByDateRange(Date dateFrom, Date dateTo);
 
-    Optional<List<Report>> findByReportDate(Date date);
+    List<Report> findByReportDate(Date date);
 
-    Optional<List<Report>> findByReportType(ReportType reportType);
+    List<Report> findByReportType(ReportType reportType);
 }

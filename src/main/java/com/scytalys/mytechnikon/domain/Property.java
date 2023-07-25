@@ -41,7 +41,7 @@ public class Property extends BaseModel{
     private Long propertyLatitude;
 
     @Column(name = "active")
-    private boolean active;
+    private boolean isActive;
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private List<Repair> repairs;

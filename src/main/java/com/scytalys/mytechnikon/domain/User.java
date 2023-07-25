@@ -45,12 +45,12 @@ public class User extends BaseModel{
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$", message = "Invalid password")
     private String password;
 
+    @Column(name = "user_picture")
+    private String userPictureUrl;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Column(name = "user_picture")
-    private String userPictureUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Property> properties;
