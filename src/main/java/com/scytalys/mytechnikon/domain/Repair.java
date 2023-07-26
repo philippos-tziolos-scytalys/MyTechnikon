@@ -1,6 +1,5 @@
 package com.scytalys.mytechnikon.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -38,7 +37,6 @@ public class Repair extends BaseModel {
     @Column(nullable = false)
     private BigDecimal cost;
 
-    @JsonBackReference
     @ManyToOne
     private Property property;
 }
