@@ -1,5 +1,6 @@
 package com.scytalys.mytechnikon.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -16,7 +17,6 @@ import java.util.Date;
 @Table(name = "Repairs")
 @SequenceGenerator(name = "idGenerator", sequenceName = "repair_seq", initialValue = 1, allocationSize = 1)
 public class Repair extends BaseModel {
-
 
     @Enumerated(EnumType.STRING)
     @Column(length = 15, nullable = false)
@@ -38,6 +38,7 @@ public class Repair extends BaseModel {
     @Column(nullable = false)
     private BigDecimal cost;
 
+    @JsonBackReference
     @ManyToOne
     private Property property;
 }
