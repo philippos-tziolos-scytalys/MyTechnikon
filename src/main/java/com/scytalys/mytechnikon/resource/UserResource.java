@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @Builder
 public class UserResource extends BaseResource{
+    private Long id;
     private Long tin;
     private String name;
     private String surname;

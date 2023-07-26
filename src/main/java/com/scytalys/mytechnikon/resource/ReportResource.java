@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class ReportResource extends BaseResource{
+    private Long id;
     private Date reportDate;
     private ReportType reportType;
     private String reportDescription;

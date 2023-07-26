@@ -36,7 +36,7 @@ public class PropertyController {
         propertyService.deleteById(propertyId);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<PropertyResource>> findProperties() {
         return ResponseEntity.ok(propertyMapper.toResourceList(propertyService.findAll()));
     }

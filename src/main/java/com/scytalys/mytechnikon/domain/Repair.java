@@ -2,21 +2,23 @@ package com.scytalys.mytechnikon.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "Repairs")
 @SequenceGenerator(name = "idGenerator", sequenceName = "repair_seq", initialValue = 1, allocationSize = 1)
 public class Repair extends BaseModel {
-
+    private Long id;
     @Enumerated(EnumType.STRING)
     @Column(length = 15, nullable = false)
     private RepairType repairType;

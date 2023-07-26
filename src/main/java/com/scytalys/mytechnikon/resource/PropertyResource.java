@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 @Builder
 public class PropertyResource extends BaseResource{
+    private Long id;
     private Long pin;
     private String address;
     private Integer constructionYear;

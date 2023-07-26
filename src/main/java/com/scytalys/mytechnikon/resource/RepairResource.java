@@ -14,6 +14,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class RepairResource extends BaseResource {
+    private Long id;
     private RepairType repairType;
     private RepairStatus repairStatus;
     private String description;
