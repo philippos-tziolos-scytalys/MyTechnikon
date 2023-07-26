@@ -18,13 +18,13 @@ public class PropertyController {
 
     private final PropertyMapper propertyMapper;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<PropertyResource> createProperty(@RequestBody PropertyResource propertyResource) {
         return new ResponseEntity<>(propertyMapper.toResource(
                 propertyService.create(propertyMapper.toDomain(propertyResource))), HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public void updateProperty(@RequestBody PropertyResource propertyResource) {
         propertyService.update(propertyMapper.toDomain(propertyResource));
     }

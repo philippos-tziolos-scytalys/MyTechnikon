@@ -21,12 +21,12 @@ public class RepairController {
     private final RepairService repairService;
     private final RepairMapper repairMapper;
 
-    @PutMapping("/update")
+    @PutMapping
     public void updateRepair(@RequestBody RepairResource repairResource) {
         repairService.update(repairMapper.toDomain(repairResource));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<RepairResource> createRepair(@RequestBody RepairResource repairResource) {
         return new ResponseEntity<>(repairMapper.toResource(
                 (repairService.create(repairMapper.toDomain(repairResource)))), HttpStatus.CREATED);

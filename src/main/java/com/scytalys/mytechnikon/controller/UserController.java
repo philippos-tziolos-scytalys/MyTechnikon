@@ -17,11 +17,16 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
 
         return new ResponseEntity<>(userMapper.toResource(
                 userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public void updateUser(@RequestBody UserResource userResource) {
+        userService.update(userMapper.toDomain(userResource));
     }
 
     @GetMapping
@@ -48,10 +53,5 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") final Long id) {
         userService.deleteById(id);
         return ResponseEntity.ok("User deleted successfully");
-    }
-
-    @PutMapping("/update")
-    public void updateUser(@RequestBody UserResource userResource) {
-        userService.update(userMapper.toDomain(userResource));
     }
 }
