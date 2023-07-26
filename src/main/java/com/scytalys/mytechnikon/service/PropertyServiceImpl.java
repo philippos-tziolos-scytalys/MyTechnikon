@@ -26,15 +26,22 @@ public class PropertyServiceImpl extends BaseServiceImpl<Property> implements Pr
     }
 
     @Override
-    public List<Property> findByTin(Long tin) { return propertyRepository.findByTin(tin); }
-
-    public List<Property> findPropertyByUserId(Long userId){ return propertyRepository.findByUserId(userId); }
+    public List<Property> findByTin(Long tin) {
+        return propertyRepository.findByTin(tin);
+    }
 
     @Override
-    public List<Property> findByPropertyType(String propertyType) { return propertyRepository.findByPropertyType(propertyType); }
+    public List<Property> findByPropertyType(String propertyType) {
+        return propertyRepository.findByPropertyType(propertyType);
+    }
 
     @Override
     public List<Property> findByConstructionYearRange(int yearFrom, int yearTo) {
         return propertyRepository.findByConstructionYearBetween(yearFrom, yearTo);
+    }
+
+    @Override
+    public List<Property> findPropertyByUserId(Long userId) {
+        return propertyRepository.findPropertyByUser(userId);
     }
 }

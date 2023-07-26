@@ -17,6 +17,6 @@ public class PropertyResource extends BaseResource{
     private String propertyPictureUrl;
     private Long propertyLongitude;
     private Long propertyLatitude;
-    private boolean isActive;
+    private boolean active;
     private User user;
 }

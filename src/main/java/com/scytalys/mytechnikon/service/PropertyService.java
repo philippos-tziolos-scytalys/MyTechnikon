@@ -8,9 +8,10 @@ public interface PropertyService extends BaseService<Property, Long> {
     Property findByPin(Long pin);
 
     List<Property> findByTin(Long tin);
-    List<Property> findPropertyByUserId(Long userId);
 
     List<Property> findByPropertyType(String propertyType);
 
     List<Property> findByConstructionYearRange(int yearFrom, int yearTo);
+
+    List<Property> findPropertyByUserId(Long userId);
 }

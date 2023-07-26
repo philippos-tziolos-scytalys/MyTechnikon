@@ -61,7 +61,7 @@ public class PropertyController {
 
     @GetMapping(params = {"yearFrom", "yearTo"})
     public ResponseEntity<List<PropertyResource>> findPropertyByConstructionYearRange(@RequestParam("yearFrom") int yearFrom,
-                                                                              @RequestParam("yearTo") int yearTo) {
+                                                                                      @RequestParam("yearTo") int yearTo) {
         return ResponseEntity.ok(propertyMapper.toResourceList(propertyService.findByConstructionYearRange(yearFrom, yearTo)));
     }
 

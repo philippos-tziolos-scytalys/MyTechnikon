@@ -43,8 +43,7 @@ public class Property extends BaseModel{
     @Column(name = "map_location_lat")
     private Long propertyLatitude;
 
-    @Column(name = "active")
-    private boolean isActive;
+    private boolean active;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
