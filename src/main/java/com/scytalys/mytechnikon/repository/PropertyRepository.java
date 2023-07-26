@@ -22,7 +22,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
                 join fetch User u
                 where u.id = :userId
             """)
-    List<Property> findPropertyByUser(Long userId);
+    List<Property> findByUserId(Long userId);
 
     List<Property> findByPropertyType(String propertyType);
 

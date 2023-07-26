@@ -33,10 +33,9 @@ public abstract class BaseServiceImpl<T extends BaseModel> extends BaseComponent
 
     @Override
     public void update(final T item) {
-        logger.trace("Updating {}.", item);
-        T theItem = getRepository().getReferenceById(item.getId());
-//        getRepository().save(item);
-        theItem.save(item);
+        final T itemFound = getRepository().getReferenceById(item.getId());
+        logger.trace("Updating {}.", itemFound);
+        getRepository().save(itemFound);
     }
 
     @Override

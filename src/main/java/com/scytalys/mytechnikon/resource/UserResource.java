@@ -19,4 +19,5 @@ public class UserResource extends BaseResource{
     private String password;
     private String userPictureUrl;
     private Role role;
+//    private List<Property> properties;
 }
