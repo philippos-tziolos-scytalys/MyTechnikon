@@ -18,30 +18,30 @@ public class UserController {
     private final UserMapper userMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<UserResource> addUser(@RequestBody UserResource userResource) {
+    public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
 
         return new ResponseEntity<>(userMapper.toResource(
                 userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
     }
 
-    @GetMapping()
-    public ResponseEntity<List<UserResource>> findAll() {
-        return new ResponseEntity<>(userMapper.toResourceList(userService.findAll()), HttpStatus.ACCEPTED);
+    @GetMapping
+    public ResponseEntity<List<UserResource>> findUsers() {
+        return ResponseEntity.ok(userMapper.toResourceList(userService.findAll()));
     }
 
     @GetMapping(params = {"id"})
-    public ResponseEntity<UserResource> getById(@RequestParam("id") Long id) {
-        return new ResponseEntity<>(userMapper.toResource(userService.get(id)), HttpStatus.ACCEPTED);
+    public ResponseEntity<UserResource> findUserById(@RequestParam("id") Long id) {
+        return ResponseEntity.ok(userMapper.toResource(userService.get(id)));
     }
 
     @GetMapping(params = {"tin"})
-    public ResponseEntity<UserResource> findByTin(@RequestParam("tin") Long tin) {
-        return new ResponseEntity<>(userMapper.toResource(userService.findByTin(tin)), HttpStatus.ACCEPTED);
+    public ResponseEntity<UserResource> findUserByTin(@RequestParam("tin") Long tin) {
+        return ResponseEntity.ok(userMapper.toResource(userService.findByTin(tin)));
     }
 
     @GetMapping(params = {"email"})
-    public ResponseEntity<UserResource> searchUserByEmail(@RequestParam("email") String email) {
-        return new ResponseEntity<>(userMapper.toResource(userService.findByEmail(email)), HttpStatus.ACCEPTED);
+    public ResponseEntity<UserResource> findUserByEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(userMapper.toResource(userService.findByEmail(email)));
     }
 
     @DeleteMapping("delete/{id}")

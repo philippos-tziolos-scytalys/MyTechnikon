@@ -41,7 +41,7 @@ public class PropertyServiceImpl extends BaseServiceImpl<Property> implements Pr
     }
 
     @Override
-    public List<Property> findPropertyByUser(Long userId) {
-        return propertyRepository.findPropertyByUser(userId);
+    public List<Property> findPropertyByUserId(Long userId) {
+        return propertyRepository.findPropertyByUserId(userId);
     }
 }

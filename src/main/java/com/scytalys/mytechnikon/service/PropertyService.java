@@ -13,5 +13,5 @@ public interface PropertyService extends BaseService<Property, Long> {
 
     List<Property> findByConstructionYearRange(int yearFrom, int yearTo);
 
-    List<Property> findPropertyByUser(Long userId);
+    List<Property> findPropertyByUserId(Long userId);
 }
