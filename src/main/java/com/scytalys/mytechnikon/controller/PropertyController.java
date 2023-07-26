@@ -25,8 +25,15 @@ public class PropertyController {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProperty(@RequestBody PropertyResource propertyResource) {
         propertyService.update(propertyMapper.toDomain(propertyResource));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProperty(@PathVariable("id") Long propertyId) {
+        propertyService.deleteById(propertyId);
     }
 
     @GetMapping()
@@ -63,11 +70,5 @@ public class PropertyController {
     public ResponseEntity<List<PropertyResource>> findPropertyByConstructionYearRange(@RequestParam("yearFrom") int yearFrom,
                                                                                       @RequestParam("yearTo") int yearTo) {
         return ResponseEntity.ok(propertyMapper.toResourceList(propertyService.findByConstructionYearRange(yearFrom, yearTo)));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProperty(@PathVariable("id") Long propertyId) {
-        propertyService.deleteById(propertyId);
-        return ResponseEntity.ok("Repair deleted successfully");
     }
 }

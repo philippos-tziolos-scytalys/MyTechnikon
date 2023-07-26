@@ -21,18 +21,25 @@ public class RepairController {
     private final RepairService repairService;
     private final RepairMapper repairMapper;
 
-    @PutMapping
-    public void updateRepair(@RequestBody RepairResource repairResource) {
-        repairService.update(repairMapper.toDomain(repairResource));
-    }
-
     @PostMapping
     public ResponseEntity<RepairResource> createRepair(@RequestBody RepairResource repairResource) {
         return new ResponseEntity<>(repairMapper.toResource(
                 (repairService.create(repairMapper.toDomain(repairResource)))), HttpStatus.CREATED);
     }
 
-    @GetMapping()
+    @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateRepair(@RequestBody RepairResource repairResource) {
+        repairService.update(repairMapper.toDomain(repairResource));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRepair(@PathVariable("id") Long id) {
+        repairService.deleteById(id);
+    }
+
+    @GetMapping
     public ResponseEntity<List<RepairResource>> findRepairs() {
         return ResponseEntity.ok(repairMapper.toResourceList(repairService.findAll()));
     }
@@ -55,11 +62,4 @@ public class RepairController {
             @RequestParam("toRepairDate") Date toRepairDate) {
         return ResponseEntity.ok(repairMapper.toResourceList(repairService.findByRepairDateBetween(fromRepairDate, toRepairDate)));
     }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteRepair(@PathVariable("id") Long id) {
-        repairService.deleteById(id);
-        return ResponseEntity.ok("Repair deleted successfully");
-    }
-
 }

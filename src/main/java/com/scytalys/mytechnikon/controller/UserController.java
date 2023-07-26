@@ -25,8 +25,15 @@ public class UserController {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@RequestBody UserResource userResource) {
         userService.update(userMapper.toDomain(userResource));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable("id") final Long id) {
+        userService.deleteById(id);
     }
 
     @GetMapping
@@ -34,8 +41,8 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toResourceList(userService.findAll()));
     }
 
-    @GetMapping(params = {"id"})
-    public ResponseEntity<UserResource> findUserById(@RequestParam("id") Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResource> findUserById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userMapper.toResource(userService.get(id)));
     }
 
@@ -47,11 +54,5 @@ public class UserController {
     @GetMapping(params = {"email"})
     public ResponseEntity<UserResource> findUserByEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(userMapper.toResource(userService.findByEmail(email)));
-    }
-
-    @DeleteMapping("delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") final Long id) {
-        userService.deleteById(id);
-        return ResponseEntity.ok("User deleted successfully");
     }
 }
