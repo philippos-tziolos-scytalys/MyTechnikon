@@ -44,4 +44,12 @@ public class PropertyServiceImpl extends BaseServiceImpl<Property> implements Pr
     public List<Property> findPropertyByUserId(Long userId) {
         return propertyRepository.findPropertyByUserId(userId);
     }
+
+    @Override
+    public List<Property> searchByRadius(Long x, Long y, Long radius) {
+        return propertyRepository.findAll().stream().filter(
+                (p) -> Math.pow(p.getPropertyLongitude() - y,2) + Math.pow(p.getPropertyLatitude() - x,2) < Math.pow(radius,2)).toList();
+    }
+
+
 }
