@@ -2,7 +2,10 @@ package com.scytalys.mytechnikon.controller;
 
 import com.scytalys.mytechnikon.domain.Report;
 import com.scytalys.mytechnikon.domain.ReportType;
+import com.scytalys.mytechnikon.domain.Role;
+import com.scytalys.mytechnikon.domain.User;
 import com.scytalys.mytechnikon.mapper.UserMapper;
+import com.scytalys.mytechnikon.resource.LoginResource;
 import com.scytalys.mytechnikon.resource.UserResource;
 import com.scytalys.mytechnikon.service.ReportService;
 import com.scytalys.mytechnikon.service.UserService;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+
+import static com.scytalys.mytechnikon.encryption.Encryption.getHashCode;
 
 @RestController
 @RequestMapping("/users")
@@ -39,8 +44,20 @@ public class UserController {
         report.setReportType(ReportType.USER_REGISTRATION);
         report.setReportDescription("EMAIL: " + userMapper.toDomain(userResource).getEmail());
         reportService.create(report);
+        userResource.setRole(Role.CUSTOMER);
+        userResource.setPassword(getHashCode(userResource.getPassword()));
         return new ResponseEntity<>(userMapper.toResource(
                 userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserResource> logInUser(@RequestBody LoginResource loginResource) {
+        User user = userService.findByUsernameOrEmail(loginResource.getUsername(), loginResource.getEmail());
+        String password = getHashCode(loginResource.getPassword());
+        if (user != null && password.equals(user.getPassword())) {
+            return new ResponseEntity<>(userMapper.toResource(user), HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
@@ -79,4 +96,6 @@ public class UserController {
     public ResponseEntity<UserResource> findUserByEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok(userMapper.toResource(userService.findByEmail(email)));
     }
+
+
 }

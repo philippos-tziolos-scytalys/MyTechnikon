@@ -27,4 +27,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public User findByEmail(String email) {
         return (userRepository.findByEmail(email));
     }
+
+    @Override
+    public User findByUsernameOrEmail(String username, String email) {
+        return userRepository.findByUsernameOrEmail(username,email);
+    }
 }
