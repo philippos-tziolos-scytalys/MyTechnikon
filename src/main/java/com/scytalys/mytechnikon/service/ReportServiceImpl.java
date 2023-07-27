@@ -28,12 +28,12 @@ public class ReportServiceImpl extends BaseServiceImpl<Report> implements Report
     }
 
     @Override
-    public List<Report> findByReportDate(final Date date) {
+    public List<Report> findReportByDate(final Date date) {
         return reportRepository.findByReportDate(date);
     }
 
     @Override
-    public List<Report> findByReportType(final ReportType reportType){
+    public List<Report> findReportByReportType(final ReportType reportType){
         return reportRepository.findByReportType(reportType);
     }
 }

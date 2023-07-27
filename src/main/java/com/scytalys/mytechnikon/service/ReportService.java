@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReportService extends BaseService<Report, Long> {
     List<Report> findReportsByDateRange(Date dateFrom, Date dateTo);
 
-    List<Report> findByReportDate(Date date);
+    List<Report> findReportByDate(Date date);
 
-    List<Report> findByReportType(ReportType reportType);
+    List<Report> findReportByReportType(ReportType reportType);
 }

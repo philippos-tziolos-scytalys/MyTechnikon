@@ -1,13 +1,18 @@
 package com.scytalys.mytechnikon.controller;
 
+import com.scytalys.mytechnikon.domain.Report;
+import com.scytalys.mytechnikon.domain.ReportType;
 import com.scytalys.mytechnikon.mapper.UserMapper;
 import com.scytalys.mytechnikon.resource.UserResource;
+import com.scytalys.mytechnikon.service.ReportService;
 import com.scytalys.mytechnikon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,10 +21,24 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+    private final ReportService reportService;
+
+    private void createUserEmbeddedReport(UserResource userResource, ReportType reportType, String description){
+        Report report = new Report();
+        report.setReportDate(Date.from(Instant.now()));
+        report.setReportType(reportType);
+        report.setReportDescription(description);
+        report.setUser(userMapper.toDomain(userResource));
+        reportService.create(report);
+    }
 
     @PostMapping
     public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
-
+        Report report = new Report();
+        report.setReportDate(Date.from(Instant.now()));
+        report.setReportType(ReportType.USER_REGISTRATION);
+        report.setReportDescription("EMAIL: " + userMapper.toDomain(userResource).getEmail());
+        reportService.create(report);
         return new ResponseEntity<>(userMapper.toResource(
                 userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
     }
@@ -27,12 +46,17 @@ public class UserController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@RequestBody UserResource userResource) {
+        String description = "ID: " + userMapper.toDomain(userResource).getId();
+        createUserEmbeddedReport(userResource, ReportType.USER_UPDATE, description);
         userService.update(userMapper.toDomain(userResource));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("id") final Long id) {
+        UserResource userResource = userMapper.toResource(userService.get(id));
+        String description = "ID: " + userMapper.toDomain(userResource).getId();
+        createUserEmbeddedReport(userResource, ReportType.USER_DELETION, description);
         userService.deleteById(id);
     }
 
