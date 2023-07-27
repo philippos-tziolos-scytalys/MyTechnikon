@@ -1,5 +1,6 @@
 package com.scytalys.mytechnikon.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Report extends BaseModel {
     @Column(name = "description")
     private String reportDescription;
 
+    @JsonBackReference(value = "user-report")
     @ManyToOne
     private User user;
 }

@@ -42,7 +42,6 @@ public class RepairController {
         report.setReportType(ReportType.REPAIR_REGISTRATION);
         report.setReportDescription("TYPE: " + repairMapper.toDomain(repairResource).getRepairType() +
                                     "DATE" + repairMapper.toDomain(repairResource).getRepairDate());
-        report.setUser(repairMapper.toDomain(repairResource).getProperty().getUser());
         reportService.create(report);
         return new ResponseEntity<>(repairMapper.toResource(
                 (repairService.create(repairMapper.toDomain(repairResource)))), HttpStatus.CREATED);
