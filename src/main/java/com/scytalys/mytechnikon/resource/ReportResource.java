@@ -10,7 +10,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class ReportResource extends BaseResource{
     private Long id;
     private Date reportDate;

@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class PropertyResource extends BaseResource{
     private Long id;
     private Long pin;

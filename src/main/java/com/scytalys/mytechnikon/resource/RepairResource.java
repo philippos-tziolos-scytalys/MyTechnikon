@@ -12,7 +12,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class RepairResource extends BaseResource {
     private Long id;
     private RepairType repairType;

@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class UserResource extends BaseResource{
     private Long id;
     private Long tin;
