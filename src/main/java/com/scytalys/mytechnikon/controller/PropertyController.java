@@ -75,9 +75,9 @@ public class PropertyController {
         return ResponseEntity.ok(propertyMapper.toResourceList(propertyService.findByTin(tin)));
     }
 
-    @GetMapping(params = {"property_id"})
-    public ResponseEntity <PropertyResource> findPropertyById(@RequestParam("property_id") Long property_id) {
-        return ResponseEntity.ok(propertyMapper.toResource(propertyService.get(property_id)));
+    @GetMapping("/{propertyId}")
+    public ResponseEntity <PropertyResource> findPropertyById(@PathVariable("propertyId") Long propertyId) {
+        return ResponseEntity.ok(propertyMapper.toResource(propertyService.get(propertyId)));
     }
 
     @GetMapping(params = {"userId"})

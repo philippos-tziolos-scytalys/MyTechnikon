@@ -69,6 +69,11 @@ public class RepairController {
         return ResponseEntity.ok(repairMapper.toResourceList(repairService.findAll()));
     }
 
+    @GetMapping("/{repairId}")
+    public ResponseEntity<RepairResource> findRepairById(@PathVariable("repairId") Long repairId) {
+        return ResponseEntity.ok(repairMapper.toResource(repairService.get(repairId)));
+    }
+
     @GetMapping(params = {"userId"})
     public ResponseEntity<List<RepairResource>> findRepairRepairByUserId(@RequestParam("userId") Long userId) {
         return ResponseEntity.ok(repairMapper.toResourceList(repairService.findRepairByUserId(userId)));
