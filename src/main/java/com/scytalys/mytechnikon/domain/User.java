@@ -33,7 +33,7 @@ public class User extends BaseModel{
     private String address;
 
     @NotNull
-    @Digits(integer=10, fraction=0, message = "Phone number must be exactly 10 digits")
+    @Digits(integer=12, fraction=0, message = "Phone number must be exactly 10 digits")
     private Long phone;
 
     @NotNull
@@ -58,6 +58,10 @@ public class User extends BaseModel{
     @JsonManagedReference(value = "user-property")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Property> properties;
+
+    @JsonManagedReference(value = "user-report")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Report> reports;
 
 
 }

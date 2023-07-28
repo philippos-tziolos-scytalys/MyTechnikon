@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/properties")
 @RequiredArgsConstructor

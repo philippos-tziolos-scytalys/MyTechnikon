@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.scytalys.mytechnikon.encryption.Encryption.getHashCode;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
