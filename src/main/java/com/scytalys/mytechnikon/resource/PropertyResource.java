@@ -1,8 +1,10 @@
 package com.scytalys.mytechnikon.resource;
 
 import com.scytalys.mytechnikon.domain.PropertyType;
-import com.scytalys.mytechnikon.domain.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,5 +20,5 @@ public class PropertyResource extends BaseResource{
     private Long propertyLongitude;
     private Long propertyLatitude;
     private boolean active;
-    private User user;
+    private UserResource user;
 }

@@ -1,8 +1,10 @@
 package com.scytalys.mytechnikon.resource;
 
 import com.scytalys.mytechnikon.domain.ReportType;
-import com.scytalys.mytechnikon.domain.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -15,5 +17,5 @@ public class ReportResource extends BaseResource{
     private Date reportDate;
     private ReportType reportType;
     private String reportDescription;
-    private User user;
+    private UserResource user;
 }

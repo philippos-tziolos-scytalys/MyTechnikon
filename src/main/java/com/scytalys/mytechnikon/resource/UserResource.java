@@ -1,9 +1,10 @@
 package com.scytalys.mytechnikon.resource;
 
-import com.scytalys.mytechnikon.domain.Property;
-import com.scytalys.mytechnikon.domain.Repair;
 import com.scytalys.mytechnikon.domain.Role;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -23,6 +24,6 @@ public class UserResource extends BaseResource{
     private String password;
     private String userPictureUrl;
     private Role role;
-    private List<Repair> repairs;
-    private List<Property> properties;
+    private List<RepairResource> repairs;
+    private List<PropertyResource> properties;
 }

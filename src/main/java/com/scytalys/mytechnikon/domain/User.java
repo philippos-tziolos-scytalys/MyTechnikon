@@ -56,11 +56,11 @@ public class User extends BaseModel{
     private Role role;
 
     @JsonManagedReference(value = "user-property")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Property> properties;
 
     @JsonManagedReference(value = "user-report")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Report> reports;
 
 
