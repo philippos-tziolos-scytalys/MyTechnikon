@@ -1,7 +1,5 @@
 package com.scytalys.mytechnikon.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
@@ -47,12 +45,10 @@ public class Property extends BaseModel{
 
     private boolean active;
 
-    @JsonManagedReference(value = "property-repair")
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
-    private List<Repair> repairs;
-
-    @JsonBackReference(value = "user-property")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private List<Repair> repairs;
 }

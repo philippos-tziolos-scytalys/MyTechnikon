@@ -1,11 +1,11 @@
 package com.scytalys.mytechnikon.controller;
 
-
 import com.scytalys.mytechnikon.domain.Repair;
 import com.scytalys.mytechnikon.domain.Report;
 import com.scytalys.mytechnikon.domain.ReportType;
 import com.scytalys.mytechnikon.mapper.RepairMapper;
 import com.scytalys.mytechnikon.resource.RepairResource;
+import com.scytalys.mytechnikon.service.PropertyService;
 import com.scytalys.mytechnikon.service.RepairService;
 import com.scytalys.mytechnikon.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +26,14 @@ public class RepairController {
     private final RepairService repairService;
     private final RepairMapper repairMapper;
     private final ReportService reportService;
+    private final PropertyService propertyService;
 
     private void createRepairEmbeddedReport(RepairResource repairResource, ReportType reportType, String description){
         Report report = new Report();
         report.setReportDate(Date.from(Instant.now()));
         report.setReportType(reportType);
         report.setReportDescription(description);
-        report.setUser(repairMapper.toDomain(repairResource).getProperty().getUser());
+        report.setUser(propertyService.get(repairMapper.toDomain(repairResource).getProperty().getId()).getUser());
         reportService.create(report);
     }
 
@@ -40,9 +41,8 @@ public class RepairController {
     public ResponseEntity<RepairResource> createRepair(@RequestBody RepairResource repairResource) {
         ResponseEntity<RepairResource> responseEntity = new ResponseEntity<>(repairMapper.toResource(
                 (repairService.create(repairMapper.toDomain(repairResource)))), HttpStatus.CREATED);
-        List<Repair> repairList = repairService.findByRepairDate(repairResource.getRepairDate())
-                .stream().filter(r -> r.getRepairDate().equals(repairResource.getRepairDate())).toList();
-        Repair repair = repairList.get(0);
+        Repair repair = repairService.findByRepairDateAndRepairTypeAndPropertyId(repairResource.getRepairDate(),
+                repairResource.getRepairType(), repairResource.getProperty().getId() );
         String description = "ID: " + repair.getId();
         createRepairEmbeddedReport(repairMapper.toResource(repair), ReportType.REPAIR_REGISTRATION, description);
         return responseEntity;

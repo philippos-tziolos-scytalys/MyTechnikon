@@ -1,6 +1,5 @@
 package com.scytalys.mytechnikon.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -55,13 +54,9 @@ public class User extends BaseModel{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonManagedReference(value = "user-property")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Property> properties;
 
-    @JsonManagedReference(value = "user-report")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Report> reports;
-
-
 }

@@ -65,9 +65,9 @@ public class UserController {
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@RequestBody UserResource userResource) {
+        userService.update(userMapper.toDomain(userResource));
         String description = "ID: " + userMapper.toDomain(userResource).getId();
         createUserEmbeddedReport(userResource, ReportType.USER_UPDATE, description);
-        userService.update(userMapper.toDomain(userResource));
     }
 
     @DeleteMapping("/{id}")

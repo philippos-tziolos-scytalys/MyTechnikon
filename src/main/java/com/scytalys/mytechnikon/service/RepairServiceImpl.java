@@ -2,6 +2,7 @@ package com.scytalys.mytechnikon.service;
 
 import com.scytalys.mytechnikon.domain.Repair;
 import com.scytalys.mytechnikon.domain.RepairStatus;
+import com.scytalys.mytechnikon.domain.RepairType;
 import com.scytalys.mytechnikon.repository.RepairRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,8 +24,13 @@ public class RepairServiceImpl extends BaseServiceImpl<Repair> implements Repair
     }
 
     @Override
+    public Repair findByRepairDateAndRepairTypeAndPropertyId(Date repairDate, RepairType repairType, Long propertyId) {
+        return repairRepository.findByRepairDateAndRepairTypeAndPropertyId(repairDate, repairType, propertyId);
+    }
+
+    @Override
     public List<Repair> findRepairByUserId(final Long userId) {
-        return repairRepository.findRepairByUserId(userId);
+        return repairRepository.findByUserId(userId);
     }
 
     @Override
