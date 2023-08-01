@@ -39,22 +39,24 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
-        Report report = new Report();
-        report.setReportDate(Date.from(Instant.now()));
-        report.setReportType(ReportType.USER_REGISTRATION);
-        report.setReportDescription("EMAIL: " + userMapper.toDomain(userResource).getEmail());
-        reportService.create(report);
         userResource.setRole(Role.CUSTOMER);
         userResource.setPassword(getHashCode(userResource.getPassword()));
-        return new ResponseEntity<>(userMapper.toResource(
+        ResponseEntity<UserResource> responseEntity =  new ResponseEntity<>(userMapper.toResource(
                 userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
+        User user = userService.findByEmail(userResource.getEmail());
+        String description = "ID: " + user.getId();
+        createUserEmbeddedReport(userMapper.toResource(user), ReportType.USER_REGISTRATION, description);
+        return responseEntity;
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResource> logInUser(@RequestBody LoginResource loginResource) {
         User user = userService.findByUsernameOrEmail(loginResource.getUsername(), loginResource.getEmail());
         String password = getHashCode(loginResource.getPassword());
+
         if (user != null && password.equals(user.getPassword())) {
+            String description = "ID: " + user.getId();
+            createUserEmbeddedReport(userMapper.toResource(user), ReportType.USER_LOGIN, description);
             return new ResponseEntity<>(userMapper.toResource(user), HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

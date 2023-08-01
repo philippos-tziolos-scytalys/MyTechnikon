@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,6 +22,4 @@ public class UserResource extends BaseResource{
     private String password;
     private String userPictureUrl;
     private Role role;
-    private List<RepairResource> repairs;
-    private List<PropertyResource> properties;
 }

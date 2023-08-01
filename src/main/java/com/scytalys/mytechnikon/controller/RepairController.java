@@ -1,6 +1,7 @@
 package com.scytalys.mytechnikon.controller;
 
 
+import com.scytalys.mytechnikon.domain.Repair;
 import com.scytalys.mytechnikon.domain.Report;
 import com.scytalys.mytechnikon.domain.ReportType;
 import com.scytalys.mytechnikon.mapper.RepairMapper;
@@ -37,14 +38,14 @@ public class RepairController {
 
     @PostMapping
     public ResponseEntity<RepairResource> createRepair(@RequestBody RepairResource repairResource) {
-        Report report = new Report();
-        report.setReportDate(Date.from(Instant.now()));
-        report.setReportType(ReportType.REPAIR_REGISTRATION);
-        report.setReportDescription("TYPE: " + repairMapper.toDomain(repairResource).getRepairType() +
-                                    "DATE" + repairMapper.toDomain(repairResource).getRepairDate());
-        reportService.create(report);
-        return new ResponseEntity<>(repairMapper.toResource(
+        ResponseEntity<RepairResource> responseEntity = new ResponseEntity<>(repairMapper.toResource(
                 (repairService.create(repairMapper.toDomain(repairResource)))), HttpStatus.CREATED);
+        List<Repair> repairList = repairService.findByRepairDate(repairResource.getRepairDate())
+                .stream().filter(r -> r.getRepairDate().equals(repairResource.getRepairDate())).toList();
+        Repair repair = repairList.get(0);
+        String description = "ID: " + repair.getId();
+        createRepairEmbeddedReport(repairMapper.toResource(repair), ReportType.REPAIR_REGISTRATION, description);
+        return responseEntity;
     }
 
     @PutMapping
