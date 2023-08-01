@@ -5,6 +5,7 @@ import com.scytalys.mytechnikon.domain.ReportType;
 import com.scytalys.mytechnikon.domain.Role;
 import com.scytalys.mytechnikon.domain.User;
 import com.scytalys.mytechnikon.mapper.UserMapper;
+import com.scytalys.mytechnikon.resource.ApiResponse;
 import com.scytalys.mytechnikon.resource.LoginResource;
 import com.scytalys.mytechnikon.resource.UserResource;
 import com.scytalys.mytechnikon.service.ReportService;
@@ -23,6 +24,7 @@ import static com.scytalys.mytechnikon.encryption.Encryption.getHashCode;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+//public class UserController extends BaseController<User, UserResource> {
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
@@ -38,11 +40,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
+    public ResponseEntity<ApiResponse<UserResource>> createUser(@RequestBody UserResource userResource) {
         userResource.setRole(Role.CUSTOMER);
         userResource.setPassword(getHashCode(userResource.getPassword()));
-        ResponseEntity<UserResource> responseEntity =  new ResponseEntity<>(userMapper.toResource(
-                userService.create(userMapper.toDomain(userResource))), HttpStatus.CREATED);
+        ResponseEntity<ApiResponse<UserResource>> responseEntity =
+                new ResponseEntity<>(ApiResponse.<UserResource>builder().data(userMapper.toResource(
+                userService.create(userMapper.toDomain(userResource)))).build(), HttpStatus.CREATED);
         User user = userService.findByEmail(userResource.getEmail());
         String description = "ID: " + user.getId();
         createUserEmbeddedReport(userMapper.toResource(user), ReportType.USER_REGISTRATION, description);
